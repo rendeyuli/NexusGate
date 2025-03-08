@@ -1,0 +1,17 @@
+services:
+  backend:
+    image: "ghcr.io/nexus-gate-service:latest"
+    environment:
+      - "DATABASE_URL=postgres://user:password@database:5432/app"
+
+  database:
+    image: "postgres:latest"
+    environment:
+      - "POSTGRES_USER=user"
+      - "POSTGRES_PASSWORD=password"
+      - "POSTGRES_DB=app"
+
+  frontend:
+    image: "ghcr.io/nexus-gate-service:latest"
+    environment:
+      - "BACKEND_URL=http://backend:3000"

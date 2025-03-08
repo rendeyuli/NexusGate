@@ -1,0 +1,13 @@
+{
+  "name": "nexus-gate",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "esbuild",
+    "protobufjs"
+  ]
+}

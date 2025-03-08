@@ -1,0 +1,34 @@
+{
+  "name": "nexus-gate-server",
+  "module": "./src/index.ts",
+  "main": "./src/index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/bun": "^1.2.4",
+    "drizzle-kit": "^0.30.5",
+    "pg": "^8.13.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/server-timing": "^1.2.1",
+    "@elysiajs/swagger": "^1.2.2",
+    "consola": "^3.4.0",
+    "drizzle-orm": "^0.40.0",
+    "elysia": "^1.2.23",
+    "openai": "^4.86.1"
+  },
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "build": "bun build src/index.ts --target bun --outdir ./dist",
+    "start": "NODE_ENV=production bun dist/index.js",
+    "format": "biome format --write",
+    "check": "biome check --write",
+    "orm:push": "bunx drizzle-kit push",
+    "orm:studio": "bunx drizzle-kit studio"
+  }
+}
