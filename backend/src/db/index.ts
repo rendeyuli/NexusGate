@@ -3,6 +3,7 @@ import * as schema from "./schema";
 import { and, asc, count, desc, eq, not, sum } from "drizzle-orm";
 import consola from "consola";
 import { DATABASE_URL } from "@/utils/config";
+import { migrate } from "drizzle-orm/bun-sql/migrator";
 
 const globalThis_ = globalThis as typeof globalThis & {
   db: ReturnType<typeof drizzle>;
@@ -20,6 +21,9 @@ const db = (() => {
   }
   return globalThis_.db;
 })();
+await migrate(db, {
+  migrationsFolder: "drizzle"
+});
 
 export type ApiKey = typeof schema.ApiKeysTable.$inferSelect;
 export type ApiKeyInsert = typeof schema.ApiKeysTable.$inferInsert;
