@@ -24,7 +24,7 @@ server {
 
   location / {
     root /var/www/html;
-    index index.html;
+    try_files \$uri \$uri/ /index.html;
   }
 }
 EOF

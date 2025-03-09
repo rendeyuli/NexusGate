@@ -2,7 +2,7 @@ FROM oven/bun:1 AS base
 WORKDIR /app
 
 
-FROM base as builder
+FROM base AS builder
 COPY . .
 RUN --mount=type=cache,target=/cache \
     BUN_INSTALL_CACHE_DIR=/cache bun install --frozen-lockfile
