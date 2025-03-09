@@ -1,17 +1,34 @@
 services:
-  backend:
-    image: "ghcr.io/nexus-gate-service:latest"
-    environment:
-      - "DATABASE_URL=postgres://user:password@database:5432/app"
-
   database:
     image: "postgres:latest"
     environment:
-      - "POSTGRES_USER=user"
-      - "POSTGRES_PASSWORD=password"
-      - "POSTGRES_DB=app"
+      - "POSTGRES_USER=nexusgate"
+      - "POSTGRES_PASSWORD=change_me_in_production"
+    volumes:
+      - "./db:/var/lib/postgresql/data"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexusgate -h localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: "ghcr.io/geekchange/nexus-gate-server:latest"
+    environment:
+      - "DATABASE_URL=postgres://nexusgate:change_me_in_production@database:5432/nexusgate"
+      - "ADMIN_SUPER_SECRET=admin_key_change_in_production"
+    restart: on-failure
+    depends_on:
+      database:
+        condition: service_healthy
 
   frontend:
-    image: "ghcr.io/nexus-gate-service:latest"
+    image: "ghcr.io/geekchange/nexus-gate-web:latest"
     environment:
       - "BACKEND_URL=http://backend:3000"
+    restart: on-failure
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
