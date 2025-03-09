@@ -10,7 +10,7 @@
 </div>
 
 <div align="right">
-  <a href="CONTRIBUTING.md">English</a>
+  <a href="README.en.md">English</a>
 </div>
 
 - [🚀 简介](#-简介)
