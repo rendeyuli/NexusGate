@@ -253,6 +253,12 @@ export const completionsApi = new Elysia({
             // Unreachable, unless upstream returned a malformed response
             return error(500, "Unexpected chunk");
           }
+          if (isFirstChunk) {
+            logger.error("upstream error: no chunk received");
+            completion.status = "failed";
+            addCompletions(completion, bearer);
+            return error(500, "No chunk received");
+          }
           for await (const chunk of chunks) {
             // Continue to yield the rest of the chunks if needed
             yield `data: ${chunk}\n\n`;
