@@ -181,6 +181,7 @@ export const completionsApi = new Elysia({
             return error(500, "No body");
           }
 
+          logger.debug("parse stream completions response");
           const chunks: AsyncGenerator<string> = parseSse(resp.body);
 
           let ttft = -1;
@@ -226,12 +227,12 @@ export const completionsApi = new Elysia({
               const delta = data.choices[0].delta;
               const content = delta.content;
               if (content) {
-                partials.push(content)
+                partials.push(content);
               } else {
                 const delta_ = delta as unknown as { reasoning_content?: string };
                 if (delta_.reasoning_content) {
                   // workaround: api.deepseek.com returns reasoning_content in delta
-                  partials.push(delta_.reasoning_content); 
+                  partials.push(delta_.reasoning_content);
                 }
               }
               yield `data: ${chunk}\n\n`;
