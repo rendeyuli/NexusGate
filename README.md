@@ -3,9 +3,9 @@
 <h1>NexusGate</h1>
 仅需一行代码，完成 Agent 应用的监控与管理
 
-[![GitHub license](https://img.shields.io/github/license/geekchange/nexusgate)](https://github.com/geekchange/nexusgate/blob/main/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/geekchange/nexusgate)](https://github.com/geekchange/nexusgate/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/geekchange/nexusgate)](https://github.com/geekchange/nexusgate/issues)
+[![GitHub license](https://img.shields.io/github/license/geektechx/nexusgate)](https://github.com/geektechx/nexusgate/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/geektechx/nexusgate)](https://github.com/geektechx/nexusgate/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/geektechx/nexusgate)](https://github.com/geektechx/nexusgate/issues)
 [![Free Use](https://img.shields.io/badge/free-pricing?logo=free&color=%20%23155EEF&label=pricing&labelColor=%20%23528bff)](https://img.shields.io/badge/free-pricing?logo=free&color=%20%23155EEF&label=pricing&labelColor=%20%23528bff)
 </div>
 
@@ -47,7 +47,7 @@ NexusGate 是一个 Agent 应用监控和管理平台。它将帮助 Agent 应�
 NexusGate 提供 Docker Compose 配置文件，支持 ARM 和 x86 架构。
 
 ```bash
-wget https://github.com/GeekChange/NexusGate/raw/refs/heads/main/docker-compose.yaml
+wget https://github.com/GeekTechX/NexusGate/raw/refs/heads/main/docker-compose.yaml
 nano docker-compose.yaml # 或者使用其他文本编辑器
 docker compose up -d
 ```
@@ -163,7 +163,7 @@ NexusGate 为管理组织所有 LLM 应用提供统一仪表板：
 
 **Contributors**
 
-<img src="https://contrib.rocks/image?repo=GeekChange/NexusGate" />
+<img src="https://contrib.rocks/image?repo=GeekTechX/NexusGate" />
 
 ## 📚 文档
 

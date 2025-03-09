@@ -29,7 +29,7 @@ Before you begin, make sure you have:
 
 ### 1. Fork the Repository
 
-Start by forking the [NexusGate repository](https://github.com/geekchange/nexusgate) to your own GitHub account.
+Start by forking the [NexusGate repository](https://github.com/geektechx/nexusgate) to your own GitHub account.
 
 ### 2. Clone Your Fork
 
@@ -41,7 +41,7 @@ cd nexusgate
 ### 3. Add Upstream Remote
 
 ```bash
-git remote add upstream https://github.com/geekchange/nexusgate.git
+git remote add upstream https://github.com/geektechx/nexusgate.git
 ```
 
 ### 4. Create a Branch
@@ -124,8 +124,8 @@ Examples:
 
 Join our community channels to get help, share ideas, and connect with other contributors:
 
-- [GitHub Issues](https://github.com/geekchange/nexusgate/issues): For bug reports and feature requests
-- [GitHub Discussions](https://github.com/geekchange/nexusgate/discussions): For general questions and discussions
+- [GitHub Issues](https://github.com/geektechx/nexusgate/issues): For bug reports and feature requests
+- [GitHub Discussions](https://github.com/geektechx/nexusgate/discussions): For general questions and discussions
 
 ## Recognition
 
