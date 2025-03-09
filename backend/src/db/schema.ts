@@ -35,6 +35,9 @@ export const UpstreamTable = pgTable("upstreams", {
   model: varchar("model", {
     length: 63,
   }).notNull(),
+  upstreamModel: varchar("upstream_model", {
+    length: 63,
+  }),
   apiKey: varchar("api_key", {
     length: 255,
   }),

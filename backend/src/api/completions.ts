@@ -46,7 +46,9 @@ export const completionsApi = new Elysia({
       if (!upstream) {
         return error(404, "Model not found");
       }
+      const requestedModel = body.model;
       const upstreamEndpoint = `${upstream.url}/chat/completions`;
+      body.model = upstream.upstreamModel ?? upstream.model;
 
       const reqInit: RequestInit = {
         method: "POST",
@@ -59,7 +61,7 @@ export const completionsApi = new Elysia({
       };
 
       const completion: Completion = {
-        model: body.model,
+        model: requestedModel,
         upstreamId: upstream.id,
         prompt: {
           messages: body.messages.map((u) => {
@@ -229,7 +231,9 @@ export const completionsApi = new Elysia({
               if (content) {
                 partials.push(content);
               } else {
-                const delta_ = delta as unknown as { reasoning_content?: string };
+                const delta_ = delta as unknown as {
+                  reasoning_content?: string;
+                };
                 if (delta_.reasoning_content) {
                   // workaround: api.deepseek.com returns reasoning_content in delta
                   partials.push(delta_.reasoning_content);
