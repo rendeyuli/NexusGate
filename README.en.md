@@ -4,9 +4,9 @@
 <h1>NexusGate</h1>
 Monitor and manage your Agent applications with just one line of code
 
-[![GitHub license](https://img.shields.io/github/license/geekchange/nexusgate)](https://github.com/geekchange/nexusgate/blob/main/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/geekchange/nexusgate)](https://github.com/geekchange/nexusgate/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/geekchange/nexusgate)](https://github.com/geekchange/nexusgate/issues)
+[![GitHub license](https://img.shields.io/github/license/geektechx/nexusgate)](https://github.com/geektechx/nexusgate/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/geektechx/nexusgate)](https://github.com/geektechx/nexusgate/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/geektechx/nexusgate)](https://github.com/geektechx/nexusgate/issues)
 [![Free Use](https://img.shields.io/badge/free-pricing?logo=free&color=%20%23155EEF&label=pricing&labelColor=%20%23528bff)](https://img.shields.io/badge/free-pricing?logo=free&color=%20%23155EEF&label=pricing&labelColor=%20%23528bff)
 </div>
 
@@ -48,7 +48,7 @@ With NexusGate, you only need to modify one line of code to monitor, manage, and
 NexusGate provides a Docker Compose configuration supporting both ARM and x86 architectures.
 
 ```bash
-wget https://github.com/GeekChange/NexusGate/raw/refs/heads/main/docker-compose.yaml
+wget https://github.com/geektechx/NexusGate/raw/refs/heads/main/docker-compose.yaml
 nano docker-compose.yaml # Or use other text editors
 docker compose up -d
 ```
@@ -164,7 +164,7 @@ Please check out [CONTRIBUTING.md](CONTRIBUTING.md) to learn how to get started.
 
 **Contributors**
 
-<img src="https://contrib.rocks/image?repo=GeekChange/NexusGate" />
+<img src="https://contrib.rocks/image?repo=GeekTechX/NexusGate" />
 
 ## 📚 Documentation
 
