@@ -46,32 +46,12 @@ With NexusGate, you only need to modify one line of code to monitor, manage, and
 
 ## 🐳 Quick Start
 
-NexusGate provides Docker images supporting both ARM and x86 architectures.
+NexusGate provides a Docker Compose configuration supporting both ARM and x86 architectures.
 
 ```bash
-# Pull the latest image
-docker pull geekchange/nexusgate:latest
-
-# Run with default configuration
-docker run -d -p 3000:3000 -p 8000:8000 \
-  --name nexusgate \
-  -v nexusgate-data:/app/data \
-  geekchange/nexusgate:latest
-
-# Access the dashboard
-# Open http://localhost:3000 in your browser
-```
-
-Advanced configuration:
-
-```bash
-# Run with environment variables
-docker run -d -p 3000:3000 -p 8000:8000 \
-  --name nexusgate \
-  -v nexusgate-data:/app/data \
-  -e DATABASE_URL="postgresql://user:password@host:port/dbname" \
-  -e AUTH_SECRET="your-secret-key" \
-  geekchange/nexusgate:latest
+wget https://github.com/GeekChange/NexusGate/raw/refs/heads/main/docker-compose.yaml
+nano docker-compose.yaml # Or use other text editors
+docker compose up -d
 ```
 
 ## 🔍 System Features

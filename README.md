@@ -45,32 +45,12 @@ NexusGate 是一个 Agent 应用监控和管理平台。它将帮助 Agent 应�
 
 ## 🐳 快速启动
 
-NexusGate 提供 Docker 镜像，支持 ARM 和 x86 架构。
+NexusGate 提供 Docker Compose 配置文件，支持 ARM 和 x86 架构。
 
 ```bash
-# 拉取最新镜像
-docker pull geekchange/nexusgate:latest
-
-# 使用默认配置运行
-docker run -d -p 3000:3000 -p 8000:8000 \
-  --name nexusgate \
-  -v nexusgate-data:/app/data \
-  geekchange/nexusgate:latest
-
-# 访问仪表板
-# 在浏览器中打开 http://localhost:3000
-```
-
-高级配置：
-
-```bash
-# 使用环境变量运行
-docker run -d -p 3000:3000 -p 8000:8000 \
-  --name nexusgate \
-  -v nexusgate-data:/app/data \
-  -e DATABASE_URL="postgresql://user:password@host:port/dbname" \
-  -e AUTH_SECRET="your-secret-key" \
-  geekchange/nexusgate:latest
+wget https://github.com/GeekChange/NexusGate/raw/refs/heads/main/docker-compose.yaml
+nano docker-compose.yaml # 或者使用其他文本编辑器
+docker compose up -d
 ```
 
 ## 🔍 系统功能
