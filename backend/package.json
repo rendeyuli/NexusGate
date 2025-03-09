@@ -23,7 +23,7 @@
     "openai": "^4.86.1"
   },
   "scripts": {
-    "dev": "CONSOLA_LEVEL=9999 bun --watch src/index.ts",
+    "dev": "CONSOLA_LEVEL=9999 bun --watch --hot --no-clear-screen src/index.ts",
     "format": "biome format --write",
     "check": "biome check --write"
   }

@@ -222,7 +222,7 @@ export const completionsApi = new Elysia({
               return error(500, "Invalid JSON");
             }
 
-            if (data.choices.length === 1) {
+            if (data.choices.length === 1 && data.choices[0].finish_reason !== "stop") {
               // If there is only one choice, regular chunk
               const delta = data.choices[0].delta;
               const content = delta.content;
@@ -238,8 +238,13 @@ export const completionsApi = new Elysia({
               yield `data: ${chunk}\n\n`;
               continue;
             }
-            if (data.choices.length === 0) {
+            // work around: api.deepseek.com returns choices with empty content and finish_reason = "stop" in usage response
+            if (
+              data.choices.length === 0 ||
+              (data.choices.length === 1 && data.choices[0].finish_reason === "stop")
+            ) {
               // Assuse that is the last chunk
+              console.log(data.usage);
               completion.promptTokens = data.usage?.prompt_tokens ?? -1;
               completion.completionTokens = data.usage?.completion_tokens ?? -1;
               completion.completion = [{ role: undefined, content: partials.join("") }];
