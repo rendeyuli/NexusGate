@@ -4,7 +4,6 @@
 仅需一行代码，完成 Agent 应用的监控与管理
 
 [![GitHub license](https://img.shields.io/github/license/geekchange/nexusgate)](https://github.com/geekchange/nexusgate/blob/main/LICENSE)
-[![Docker Pulls](https://img.shields.io/docker/pulls/geekchange/nexusgate)](https://hub.docker.com/r/geekchange/nexusgate)
 [![GitHub stars](https://img.shields.io/github/stars/geekchange/nexusgate)](https://github.com/geekchange/nexusgate/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/geekchange/nexusgate)](https://github.com/geekchange/nexusgate/issues)
 [![Free Use](https://img.shields.io/badge/free-pricing?logo=free&color=%20%23155EEF&label=pricing&labelColor=%20%23528bff)](https://img.shields.io/badge/free-pricing?logo=free&color=%20%23155EEF&label=pricing&labelColor=%20%23528bff)
