@@ -157,6 +157,7 @@ export const completionsApi = new Elysia({
               status: 500,
               msg: "Failed to fetch upstream",
             });
+            completion.status = "failed";
             addCompletions(completion, bearer);
             return error(500, "Failed to fetch upstream");
           }
@@ -166,6 +167,7 @@ export const completionsApi = new Elysia({
               status: resp.status,
               msg,
             });
+            completion.status = "failed";
             addCompletions(completion, bearer);
             return error(resp.status, msg);
           }
@@ -174,6 +176,7 @@ export const completionsApi = new Elysia({
               status: resp.status,
               msg: "No body",
             });
+            completion.status = "failed";
             addCompletions(completion, bearer);
             return error(500, "No body");
           }
@@ -220,8 +223,17 @@ export const completionsApi = new Elysia({
 
             if (data.choices.length === 1) {
               // If there is only one choice, regular chunk
-              const content = data.choices[0].delta.content ?? "";
-              partials.push(content);
+              const delta = data.choices[0].delta;
+              const content = delta.content;
+              if (content) {
+                partials.push(content)
+              } else {
+                const delta_ = delta as unknown as { reasoning_content?: string };
+                if (delta_.reasoning_content) {
+                  // workaround: api.deepseek.com returns reasoning_content in delta
+                  partials.push(delta_.reasoning_content); 
+                }
+              }
               yield `data: ${chunk}\n\n`;
               continue;
             }
