@@ -15,19 +15,19 @@ export const columns: ColumnDef<ApiKey>[] = [
   },
   {
     accessorKey: 'key',
-    header: 'API Key',
+    header: 'API key',
     cell: ({ row }) => <ApiKeyCopyButton apiKey={row.original.key} revoked={row.original.revoked} />,
   },
   {
     accessorKey: 'createdAt',
-    header: 'Created At',
+    header: 'Created at',
     cell: ({ row }) => {
       return <div>{format(row.original.createdAt, 'yyyy-MM-dd')}</div>
     },
   },
   {
     accessorKey: 'expiresAt',
-    header: 'Expires At',
+    header: 'Expires at',
     cell: ({ row }) => {
       if (!row.original.expiresAt) {
         return <div>Never</div>

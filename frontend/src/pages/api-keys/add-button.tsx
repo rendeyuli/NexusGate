@@ -41,7 +41,7 @@ export function AddButton({ ...props }: ComponentProps<typeof Button>) {
       <DialogTrigger asChild>
         <Button {...props}>
           <PlusIcon />
-          New Application
+          New application
         </Button>
       </DialogTrigger>
       <DialogContent>

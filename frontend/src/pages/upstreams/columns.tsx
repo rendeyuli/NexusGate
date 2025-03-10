@@ -10,7 +10,7 @@ export type Upstream = Exclude<Awaited<ReturnType<typeof api.admin.upstream.get>
 export const columns: ColumnDef<Upstream>[] = [
   {
     accessorKey: 'name',
-    header: 'Provider Name',
+    header: 'Provider name',
   },
   {
     accessorKey: 'model',
@@ -18,7 +18,7 @@ export const columns: ColumnDef<Upstream>[] = [
   },
   {
     accessorKey: 'upstreamModel',
-    header: 'Provider Model',
+    header: 'Provider model',
   },
   {
     accessorKey: 'url',
@@ -26,7 +26,7 @@ export const columns: ColumnDef<Upstream>[] = [
   },
   {
     accessorKey: 'apiKey',
-    header: 'API Key',
+    header: 'API key',
     cell: ({ row }) => {
       const apiKey = row.original.apiKey
       return apiKey ? <ApiKeyCopyButton apiKey={apiKey} /> : null
