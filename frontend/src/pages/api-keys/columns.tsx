@@ -19,6 +19,16 @@ export const columns: ColumnDef<ApiKey>[] = [
     cell: ({ row }) => <ApiKeyCopyButton apiKey={row.original.key} revoked={row.original.revoked} />,
   },
   {
+    accessorKey: 'lastSeen',
+    header: 'Last seen',
+    cell: ({ row }) => {
+      if (!row.original.lastSeen) {
+        return <div>Never</div>
+      }
+      return <div>{format(row.original.lastSeen, 'yyyy-MM-dd HH:mm')}</div>
+    },
+  },
+  {
     accessorKey: 'createdAt',
     header: 'Created at',
     cell: ({ row }) => {
