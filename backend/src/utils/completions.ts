@@ -1,4 +1,4 @@
-import { findApiKey, insertCompletion, insertLog, type SrvLogInsert } from "@/db";
+import { findApiKey, insertCompletion, insertLog } from "@/db";
 import type {
   CompletionsCompletionType,
   CompletionsPromptType,

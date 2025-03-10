@@ -25,6 +25,8 @@ Build from source:
 cd /path/to/NexusGate/backend && \
 bun install && \
 NODE_ENV=production bun build src/index.ts --target bun --outdir out/
+# Or simply
+bun run build
 ```
 
 You will get a standalone bundle in `out/index.js`, and start server with:
