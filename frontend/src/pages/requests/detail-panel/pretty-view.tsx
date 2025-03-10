@@ -109,7 +109,7 @@ function ResponseMessageContent({ message, className }: { message: ResponseMessa
       <>
         {reasoning && (
           <div className="p-4 pb-0">
-            <ReasoningContent key="reasoning" content={reasoning} />
+            <ReasoningContent key="reasoning" content={reasoning} defaultOpen />
           </div>
         )}
         <Markdown key="content" className="p-4" text={text} />
@@ -131,7 +131,6 @@ function ResponseMessageContent({ message, className }: { message: ResponseMessa
 function ReasoningContent({ content, className, ...props }: { content: string } & ComponentProps<typeof Collapsible>) {
   return (
     <Collapsible
-      defaultOpen
       className={cn(
         'border-border/50 data-[state=open]:border-border overflow-hidden rounded-md border transition-colors',
         className,
