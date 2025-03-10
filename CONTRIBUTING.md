@@ -4,13 +4,24 @@ Thank you for your interest in contributing to NexusGate! We're excited to have 
 
 ## Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
-- [Getting Started](#getting-started)
-- [Development Setup](#development-setup)
-- [Contribution Workflow](#contribution-workflow)
-- [Pull Request Guidelines](#pull-request-guidelines)
-- [Coding Standards](#coding-standards)
-- [Community](#community)
+- [Contributing to NexusGate](#contributing-to-nexusgate)
+  - [Table of Contents](#table-of-contents)
+  - [Code of Conduct](#code-of-conduct)
+  - [Getting Started](#getting-started)
+  - [Development Setup](#development-setup)
+    - [1. Fork the Repository](#1-fork-the-repository)
+    - [2. Clone Your Fork](#2-clone-your-fork)
+    - [3. Add Upstream Remote](#3-add-upstream-remote)
+    - [4. Create a Branch](#4-create-a-branch)
+    - [5. Set Up Development Environment](#5-set-up-development-environment)
+  - [Contribution Workflow](#contribution-workflow)
+  - [Pull Request Guidelines](#pull-request-guidelines)
+    - [Commit Message Guidelines](#commit-message-guidelines)
+  - [Coding Standards](#coding-standards)
+  - [Testing](#testing)
+  - [Documentation](#documentation)
+  - [Community](#community)
+  - [Recognition](#recognition)
 
 ## Code of Conduct
 
@@ -59,11 +70,14 @@ git checkout -b fix/your-bugfix-name
 Follow these steps to set up your local development environment:
 
 ```bash
-# Install dependencies
-npm install
+# Install dependenices
+bun install
 
-# Start development server
-npm run dev
+# For backend (you may also to setup a database for testing)
+bun run dev
+
+# For frontend
+bun run start
 ```
 
 ## Contribution Workflow
