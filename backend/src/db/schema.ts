@@ -89,6 +89,10 @@ export const CompletionsTable = pgTable("completions", {
 
 export const SrvLogsLevelEnum = pgEnum("srv_logs_level", ["unspecific", "info", "warn", "error"]);
 export type SrvLogsLevelEnumType = (typeof SrvLogsLevelEnum.enumValues)[number];
+export type SrvLogDetailsType = {
+  type: string;
+  data: unknown;
+};
 
 export const SrvLogsTable = pgTable("srv_logs", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity().unique(),

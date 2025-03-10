@@ -6,6 +6,7 @@ import { addCompletions, type Completion } from "../utils/completions";
 import { parseSse } from "../utils/sse";
 import { consola } from "consola";
 import { selectUpstream } from "@/utils/upstream";
+import { insertLog } from "@/db";
 
 const logger = consola.withTag("completionsApi");
 
@@ -88,20 +89,32 @@ export const completionsApi = new Elysia({
             upstreamEndpoint,
           });
           const begin = Date.now();
-          const resp = await fetch(upstreamEndpoint, {
+          const [resp, err] = await fetch(upstreamEndpoint, {
             body: JSON.stringify(body),
             ...reqInit,
-          }).catch((err) => {
-            logger.error("fetch error", err);
-            return undefined;
-          });
+          })
+            .then((r) => [r, null] as [Response, null])
+            .catch((err) => {
+              logger.error("fetch error", err);
+              return [null, err] as [null, Error];
+            });
           if (!resp) {
             logger.error("upstream error", {
               status: 500,
               msg: "Failed to fetch upstream",
             });
             completion.status = "failed";
-            addCompletions(completion, bearer);
+            addCompletions(completion, bearer, {
+              level: "error",
+              message: `Failed to fetch upstream. ${err.toString()}`,
+              details: {
+                type: "completionError",
+                data: {
+                  type: "fetchError",
+                  msg: err.toString(),
+                },
+              },
+            });
             return error(500, "Failed to fetch upstream");
           }
           if (!resp.ok) {
@@ -111,7 +124,18 @@ export const completionsApi = new Elysia({
               msg,
             });
             completion.status = "failed";
-            addCompletions(completion, bearer);
+            addCompletions(completion, bearer, {
+              level: "error",
+              message: `Upstream error: ${msg}`,
+              details: {
+                type: "completionError",
+                data: {
+                  type: "upstreamError",
+                  status: resp.status,
+                  msg,
+                },
+              },
+            });
             return error(resp.status, msg);
           }
           const respText = await resp.text();
@@ -147,20 +171,32 @@ export const completionsApi = new Elysia({
             stream: true,
           });
           const begin = Date.now();
-          const resp = await fetch(upstreamEndpoint, {
+          const [resp, err] = await fetch(upstreamEndpoint, {
             body: JSON.stringify(body),
             ...reqInit,
-          }).catch((err) => {
-            logger.error("upstream error", err);
-            return undefined;
-          });
+          })
+            .then((r) => [r, null] as [Response, null])
+            .catch((err) => {
+              logger.error("fetch error", err);
+              return [null, err] as [null, Error];
+            });
           if (!resp) {
             logger.error("upstream error", {
               status: 500,
               msg: "Failed to fetch upstream",
             });
             completion.status = "failed";
-            addCompletions(completion, bearer);
+            addCompletions(completion, bearer, {
+              level: "error",
+              message: `Failed to fetch upstream. ${err.toString()}`,
+              details: {
+                type: "completionError",
+                data: {
+                  type: "fetchError",
+                  msg: err.toString(),
+                },
+              },
+            });
             return error(500, "Failed to fetch upstream");
           }
           if (!resp.ok) {
@@ -170,7 +206,18 @@ export const completionsApi = new Elysia({
               msg,
             });
             completion.status = "failed";
-            addCompletions(completion, bearer);
+            addCompletions(completion, bearer, {
+              level: "error",
+              message: `Upstream error: ${msg}`,
+              details: {
+                type: "completionError",
+                data: {
+                  type: "upstreamError",
+                  status: resp.status,
+                  msg,
+                },
+              },
+            });
             return error(resp.status, msg);
           }
           if (!resp.body) {
@@ -179,7 +226,18 @@ export const completionsApi = new Elysia({
               msg: "No body",
             });
             completion.status = "failed";
-            addCompletions(completion, bearer);
+            addCompletions(completion, bearer, {
+              level: "error",
+              message: "No body",
+              details: {
+                type: "completionError",
+                data: {
+                  type: "upstreamError",
+                  status: resp.status,
+                  msg: "No body",
+                },
+              },
+            });
             return error(500, "No body");
           }
 
@@ -265,7 +323,18 @@ export const completionsApi = new Elysia({
           if (isFirstChunk) {
             logger.error("upstream error: no chunk received");
             completion.status = "failed";
-            addCompletions(completion, bearer);
+            addCompletions(completion, bearer, {
+              level: "error",
+              message: "No chunk received",
+              details: {
+                type: "completionError",
+                data: {
+                  type: "upstreamError",
+                  status: 500,
+                  msg: "No chunk received",
+                },
+              },
+            });
             return error(500, "No chunk received");
           }
           for await (const chunk of chunks) {
