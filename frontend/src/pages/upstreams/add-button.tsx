@@ -26,6 +26,7 @@ import { Spinner } from '@/components/ui/spinner'
 const addUpstreamSchema = z.object({
   name: z.string(),
   model: z.string(),
+  upstreamModel: z.string(),
   url: z.string(),
   apiKey: z.string().optional(),
 })
@@ -45,8 +46,8 @@ export function AddButton({ ...props }: ComponentProps<typeof Button>) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add a new provider</DialogTitle>
-          <DialogDescription>Add a new provider for LLM requests.</DialogDescription>
+          <DialogTitle>Add a new model provider</DialogTitle>
+          <DialogDescription>Add a model provider for downstream application integration.</DialogDescription>
         </DialogHeader>
         <AddUpstreamForm onSubmitSuccessful={() => setOpen(false)} />
       </DialogContent>
@@ -80,10 +81,11 @@ function AddUpstreamForm({ onSubmitSuccessful }: { onSubmitSuccessful: () => voi
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Provider name</FormLabel>
               <FormControl>
                 <Input placeholder="DeepSeek" {...field} />
               </FormControl>
+              <FormDescription>Name to identify the provider.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -93,10 +95,25 @@ function AddUpstreamForm({ onSubmitSuccessful }: { onSubmitSuccessful: () => voi
           name="model"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Model</FormLabel>
+              <FormLabel>Model name</FormLabel>
+              <FormControl>
+                <Input placeholder="deepseek-r1" {...field} />
+              </FormControl>
+              <FormDescription>Custom model name for downstream applications.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="upstreamModel"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Provider model name</FormLabel>
               <FormControl>
                 <Input placeholder="deepseek-reasoner" {...field} />
               </FormControl>
+              <FormDescription>Model name used by the provider.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -106,7 +123,7 @@ function AddUpstreamForm({ onSubmitSuccessful }: { onSubmitSuccessful: () => voi
           name="url"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>URL</FormLabel>
+              <FormLabel>Base URL</FormLabel>
               <FormControl>
                 <Input placeholder="https://api.deepseek.com" {...field} />
               </FormControl>
@@ -120,7 +137,7 @@ function AddUpstreamForm({ onSubmitSuccessful }: { onSubmitSuccessful: () => voi
           name="apiKey"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>API Key</FormLabel>
+              <FormLabel>API key</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

@@ -10,15 +10,19 @@ export type Upstream = Exclude<Awaited<ReturnType<typeof api.admin.upstream.get>
 export const columns: ColumnDef<Upstream>[] = [
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: 'Provider Name',
   },
   {
     accessorKey: 'model',
     header: 'Model',
   },
   {
+    accessorKey: 'upstreamModel',
+    header: 'Provider Model',
+  },
+  {
     accessorKey: 'url',
-    header: 'URL',
+    header: 'Base URL',
   },
   {
     accessorKey: 'apiKey',

@@ -42,7 +42,7 @@ const app = new Elysia()
     port: PORT,
     reusePort: PRODUCTION,
     hostname: "0.0.0.0",
-    idleTimeout: 60 * 1000,
+    idleTimeout: 255,
   });
 
 consola.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
