@@ -11,7 +11,7 @@
     "pg": "^8.13.3"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.8.2"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
@@ -19,8 +19,8 @@
     "@elysiajs/swagger": "^1.2.2",
     "consola": "^3.4.0",
     "drizzle-orm": "^0.40.0",
-    "elysia": "^1.2.23",
-    "openai": "^4.86.1"
+    "elysia": "^1.2.25",
+    "openai": "^4.86.2"
   },
   "scripts": {
     "dev": "CONSOLA_LEVEL=9999 bun --watch --hot --no-clear-screen src/index.ts",
