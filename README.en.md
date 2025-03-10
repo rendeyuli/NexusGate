@@ -117,7 +117,7 @@ const openai = new OpenAI({
 NexusGate provides comprehensive OpenAPI documentation for easy integration with your existing systems and workflows. You can access the OpenAPI specification at:
 
 ```
-https://your-nexusgate-server/api/docs
+https://your-nexusgate-server/swagger
 ```
 
 The documentation includes all available endpoints, request/response formats, and authentication requirements, enabling developers to quickly understand and utilize all of NexusGate's capabilities.
