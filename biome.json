@@ -2,6 +2,6 @@
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "extends": ["backend/biome.json"],
   "files": {
-    "ignore": ["frontend/**"]
+    "ignore": ["frontend/**", "docs/**"]
   }
 }
