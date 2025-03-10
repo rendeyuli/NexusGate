@@ -5,6 +5,7 @@ import { serverTiming } from "@elysiajs/server-timing";
 import { routes } from "@/api";
 import { loggerPlugin } from "@/plugins/loggerPlugin";
 import { ALLOWED_ORIGINS, PORT, PRODUCTION } from "@/utils/config";
+import { consola } from "consola";
 
 const app = new Elysia()
   .use(loggerPlugin)
@@ -41,8 +42,9 @@ const app = new Elysia()
     port: PORT,
     reusePort: PRODUCTION,
     hostname: "0.0.0.0",
+    idleTimeout: 60 * 1000,
   });
 
-console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
+consola.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
 
 export type App = typeof app;

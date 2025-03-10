@@ -253,6 +253,7 @@ export const completionsApi = new Elysia({
           let isFirstChunk = true;
           const partials: string[] = [];
           const extendedTags: { think?: string[] } = {};
+          let finished = false;
           for await (const chunk of chunks) {
             if (isFirstChunk) {
               // log the time to first chunk as ttft
@@ -294,7 +295,14 @@ export const completionsApi = new Elysia({
               });
               return error(500, "Invalid JSON");
             }
-
+            if (data.usage) {
+              completion.promptTokens = data.usage.prompt_tokens;
+              completion.completionTokens = data.usage.completion_tokens;
+            }
+            if (finished) {
+              yield `data: ${chunk}\n\n`;
+              continue;
+            }
             if (data.choices.length === 1 && data.choices[0].finish_reason !== "stop") {
               // If there is only one choice, regular chunk
               const delta = data.choices[0].delta;
@@ -323,8 +331,6 @@ export const completionsApi = new Elysia({
             ) {
               // Assuse that is the last chunk
               console.log(data.usage);
-              completion.promptTokens = data.usage?.prompt_tokens ?? -1;
-              completion.completionTokens = data.usage?.completion_tokens ?? -1;
               completion.completion = [
                 {
                   role: undefined,
@@ -336,9 +342,10 @@ export const completionsApi = new Elysia({
               completion.status = "completed";
               completion.ttft = ttft;
               completion.duration = Date.now() - begin;
-              addCompletions(completion, bearer);
+              // addCompletions(completion, bearer);
               yield `data: ${chunk}\n\n`;
-              break;
+              finished = true;
+              continue;
             }
             // Unreachable, unless upstream returned a malformed response
             return error(500, "Unexpected chunk");
@@ -359,10 +366,6 @@ export const completionsApi = new Elysia({
               },
             });
             return error(500, "No chunk received");
-          }
-          for await (const chunk of chunks) {
-            // Continue to yield the rest of the chunks if needed
-            yield `data: ${chunk}\n\n`;
           }
         }
       }

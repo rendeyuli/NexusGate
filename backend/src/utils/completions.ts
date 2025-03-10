@@ -3,7 +3,6 @@ import type {
   CompletionsCompletionType,
   CompletionsPromptType,
   CompletionsStatusEnumType,
-  SrvLogDetailsType,
   SrvLogsLevelEnumType,
 } from "@/db/schema";
 import consola from "consola";
