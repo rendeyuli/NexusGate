@@ -21,7 +21,15 @@ export function useCopy(opts: UseCopyOptions = {}): UseCopyReturn {
   const copy = useCallback(
     async (text: string) => {
       if (!navigator?.clipboard) {
-        if (showErrorToast) toast.error('Clipboard not supported.')
+        if (showErrorToast)
+          toast.error('Clipboard not supported.', {
+            description: (
+              <div>
+                <p>You can copy the text below manually.</p>
+                <div className="bg-background mt-1 rounded border px-1.5 py-0.5 select-all">{text}</div>
+              </div>
+            ),
+          })
         return false
       }
 
