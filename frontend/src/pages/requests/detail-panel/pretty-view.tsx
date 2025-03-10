@@ -206,6 +206,16 @@ function RequestMetaInfo() {
       value: <DurationDisplay duration={data.duration} />,
       help: 'Total duration of the request',
     },
+    {
+      key: 'promptTokens',
+      name: 'Request tokens',
+      value: data.promptTokens === -1 ? '-' : formatNumber(data.promptTokens),
+    },
+    {
+      key: 'completionTokens',
+      name: 'Response tokens',
+      value: data.completionTokens === -1 ? '-' : formatNumber(data.completionTokens),
+    },
   ]
 
   return (
