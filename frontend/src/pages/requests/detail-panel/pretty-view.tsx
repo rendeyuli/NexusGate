@@ -1,9 +1,11 @@
 import type { ComponentProps, ReactNode } from 'react'
-import { CheckIcon, CopyIcon, ForwardIcon, HelpCircleIcon, ReplyIcon } from 'lucide-react'
+import { CheckIcon, ChevronRightIcon, CopyIcon, ForwardIcon, HelpCircleIcon, ReplyIcon } from 'lucide-react'
 import { match, P } from 'ts-pattern'
 
+import { extractReasoning } from '@/lib/content'
 import { cn, formatNumber } from '@/lib/utils'
 import { Markdown } from '@/components/app/markdown'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { IndicatorBadge } from '@/components/ui/indicator-badge'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useCopy } from '@/hooks/use-copy'
@@ -81,13 +83,17 @@ function MessageTitle({
 }
 
 function MessageContent({ message }: { message: RequestMessage }) {
+  const messageText = getMessageText(message)
+
+  const { content, reasoning } = match(message)
+    .with({ role: 'assistant' }, () => extractReasoning(messageText))
+    .otherwise(() => ({ reasoning: null, content: messageText }))
+
   return (
-    <div
-      data-role={message.role}
-      className="data-[role=user]:bg-muted/75 px-4 py-3 data-[role=system]:not-last:border-b"
-    >
-      <h4 className="text-muted-foreground mb-2 text-sm font-semibold">{message.role}</h4>
-      <Markdown className="prose-sm prose-code:text-xs" text={getMessageText(message)} />
+    <div data-role={message.role} className="data-[role=user]:bg-muted/75 p-4 data-[role=system]:not-last:border-b">
+      <h4 className="text-muted-foreground mb-3 text-sm/none font-semibold">{message.role}</h4>
+      {reasoning && <ReasoningContent className="my-4" content={reasoning} />}
+      <Markdown text={content} />
     </div>
   )
 }
@@ -98,18 +104,49 @@ function ResponseMessageContent({ message, className }: { message: ResponseMessa
   const renderResult: ReactNode[] = []
 
   if (content) {
-    renderResult.push(<Markdown key="content" className="prose-sm prose-code:text-xs px-4 py-3" text={content} />)
+    const { content: text, reasoning } = extractReasoning(content)
+    renderResult.push(
+      <>
+        {reasoning && (
+          <div className="p-4 pb-0">
+            <ReasoningContent key="reasoning" content={reasoning} />
+          </div>
+        )}
+        <Markdown key="content" className="p-4" text={text} />
+      </>,
+    )
   }
 
   if (refusal) {
     renderResult.push(
-      <div key="refusal" className="text-destructive bg-destructive/10 px-4 py-3 text-sm">
+      <div key="refusal" className="text-destructive bg-destructive/10 p-4 text-sm">
         {refusal}
       </div>,
     )
   }
 
   return <div className={className}>{renderResult}</div>
+}
+
+function ReasoningContent({ content, className, ...props }: { content: string } & ComponentProps<typeof Collapsible>) {
+  return (
+    <Collapsible
+      defaultOpen
+      className={cn(
+        'border-border/50 data-[state=open]:border-border overflow-hidden rounded-md border transition-colors',
+        className,
+      )}
+      {...props}
+    >
+      <CollapsibleTrigger className="group/collapsible bg-secondary/50 text-secondary-foreground hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-background data-[state=open]:hover:bg-accent flex w-full items-center justify-between px-4 py-2 text-sm transition-colors data-[state=open]:font-medium [&_svg]:size-4">
+        Reasoning
+        <ChevronRightIcon className="-mr-1 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <Markdown className="p-4 pt-2" text={content} />
+      </CollapsibleContent>
+    </Collapsible>
+  )
 }
 
 function DurationDisplay({ duration }: { duration?: number | null }) {

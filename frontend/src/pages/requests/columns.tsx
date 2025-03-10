@@ -6,6 +6,7 @@ import type { ChatCompletionMessage, ChatCompletionMessageParam } from 'openai/r
 import { match } from 'ts-pattern'
 
 import type { api } from '@/lib/api'
+import { extractReasoning } from '@/lib/content'
 import { cn, formatNumber } from '@/lib/utils'
 import { IndicatorBadge, MiniIndicatorBadge } from '@/components/ui/indicator-badge'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -86,10 +87,10 @@ export const columns: ColumnDef<ChatRequest>[] = [
     header: 'Response',
     cell: ({ row }) => {
       const messages = row.original.completion
-      const messageString = getAssistantMessage(messages)
+      const { content } = extractReasoning(getAssistantMessage(messages))
       return (
         <MessageContainer>
-          <MessageString message={messageString} />
+          <MessageString message={content} />
           <TokensString tokens={row.original.completionTokens} />
         </MessageContainer>
       )
