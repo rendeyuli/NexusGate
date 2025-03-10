@@ -1,15 +1,17 @@
 # NexusGate - Frontend
 
-# Getting Started
+## Getting Started
 
-To run this application:
+This project uses [Bun](https://bun.sh/) as the package manager. Make sure you have it installed before proceeding.
+
+To develop and run this application:
 
 ```bash
 bun install
 bun run start
 ```
 
-# Building For Production
+## Building For Production
 
 To build this application for production:
 
@@ -39,6 +41,12 @@ Add components using the canary version of [Shadcn](https://ui.shadcn.com/).
 bunx --bun shadcn@canary add button
 ```
 
+
+## Environment Variables
+
+Create a `.env.local` file in the root of the project and add your environment variables there. You can use the `.env.example` file as a template.
+
+More information on environment variables can be found in the [Vite documentation](https://vite.dev/guide/env-and-mode.html).
 
 
 ## Routing
@@ -105,14 +113,16 @@ More information on layouts can be found in the [Layouts documentation](hthttps:
 
 ## Data Fetching
 
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
+You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
+
+Our backend is built on Elysia.js, allowing you to utilize the [Eden Treaty](https://elysiajs.com/eden/treaty/overview.html) for type-safe and easy-to-use data fetching from the server.
 
 For example:
 
 ```tsx
 const postsQueryOptions = queryOptions({
   queryKey: ['posts'],
-  queryFn: () => fetchPosts(),
+  queryFn: () => api.posts.get(),
 })
 
 export const Route = createFileRoute('/posts')({
