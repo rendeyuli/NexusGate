@@ -22,7 +22,7 @@ export type ChatRequest = Omit<
 export const columns: ColumnDef<ChatRequest>[] = [
   {
     accessorKey: 'createdAt',
-    header: () => <div className="pl-4">Created At</div>,
+    header: () => <div className="pl-4">Created at</div>,
     cell: ({ row }) => {
       const status = row.original.status
       const indicator = match(status)
@@ -77,9 +77,15 @@ export const columns: ColumnDef<ChatRequest>[] = [
         <MessageContainer>
           <MessageString message={messageString} />
           {messages.length > 1 && <IndicatorBadge className="shrink-0">+{messages.length - 1}</IndicatorBadge>}
-          <TokensString tokens={row.original.promptTokens} />
         </MessageContainer>
       )
+    },
+  },
+  {
+    accessorKey: 'promptTokens',
+    header: () => <div className="text-right">Req. tok.</div>,
+    cell: ({ row }) => {
+      return <TokensString tokens={row.original.promptTokens} />
     },
   },
   {
@@ -91,9 +97,15 @@ export const columns: ColumnDef<ChatRequest>[] = [
       return (
         <MessageContainer>
           <MessageString message={content} />
-          <TokensString tokens={row.original.completionTokens} />
         </MessageContainer>
       )
+    },
+  },
+  {
+    accessorKey: 'completionTokens',
+    header: () => <div className="text-right">Resp. tok.</div>,
+    cell: ({ row }) => {
+      return <TokensString tokens={row.original.completionTokens} />
     },
   },
 ]
@@ -102,7 +114,7 @@ function MessageContainer({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
       className={cn(
-        'flex max-w-[200px] items-center gap-1 @5xl:max-w-[280px] @7xl:max-w-sm @min-[94rem]:max-w-lg @min-[102rem]:max-w-xl @min-[114rem]:max-w-2xl @min-[128rem]:max-w-3xl @min-[142rem]:max-w-4xl',
+        'flex max-w-[180px] items-center gap-1 @5xl:max-w-[200px] @min-[75rem]:max-w-2xs @7xl:max-w-xs @min-[87rem]:max-w-sm @min-[103rem]:max-w-lg @min-[111rem]:max-w-xl @min-[123rem]:max-w-2xl @min-[135rem]:max-w-3xl @min-[152rem]:max-w-4xl',
         className,
       )}
       {...props}
@@ -120,11 +132,11 @@ function MessageString({ message }: { message: string }) {
 
 function TokensString({ tokens }: { tokens: number }) {
   const tokenString = match(tokens)
-    .with(-1, () => '')
-    .with(1, () => '1 token')
-    .otherwise((tokens) => `${formatNumber(tokens)} tokens`)
+    .with(-1, () => '-')
+    .with(1, () => '1')
+    .otherwise((tokens) => `${formatNumber(tokens)}`)
 
-  return tokenString && <div className="text-muted-foreground text-xs">{tokenString}</div>
+  return tokenString && <div className="text-right tabular-nums">{tokenString}</div>
 }
 
 function DurationDisplay({ duration }: { duration: number | null }) {

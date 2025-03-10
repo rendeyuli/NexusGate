@@ -210,11 +210,13 @@ function RequestMetaInfo() {
       key: 'promptTokens',
       name: 'Request tokens',
       value: data.promptTokens === -1 ? '-' : formatNumber(data.promptTokens),
+      className: 'tabular-nums',
     },
     {
       key: 'completionTokens',
       name: 'Response tokens',
       value: data.completionTokens === -1 ? '-' : formatNumber(data.completionTokens),
+      className: 'tabular-nums',
     },
   ]
 
