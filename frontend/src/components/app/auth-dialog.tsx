@@ -46,7 +46,7 @@ export function AuthDialog() {
             setSecret((e.currentTarget.querySelector('input') as HTMLInputElement).value)
           }}
         >
-          <Input />
+          <Input type="password" />
           <DialogFooter>
             <Button type="submit">Save</Button>
           </DialogFooter>
