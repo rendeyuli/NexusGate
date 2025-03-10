@@ -98,11 +98,15 @@ function ResponseMessageContent({ message, className }: { message: ResponseMessa
   const renderResult: ReactNode[] = []
 
   if (content) {
-    renderResult.push(<Markdown className="prose-sm prose-code:text-xs px-4 py-3" text={content} />)
+    renderResult.push(<Markdown key="content" className="prose-sm prose-code:text-xs px-4 py-3" text={content} />)
   }
 
   if (refusal) {
-    renderResult.push(<div className="text-destructive bg-destructive/10 px-4 py-3 text-sm">{refusal}</div>)
+    renderResult.push(
+      <div key="refusal" className="text-destructive bg-destructive/10 px-4 py-3 text-sm">
+        {refusal}
+      </div>,
+    )
   }
 
   return <div className={className}>{renderResult}</div>
