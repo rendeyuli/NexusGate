@@ -6,7 +6,7 @@ import { addCompletions, type Completion } from "../utils/completions";
 import { parseSse } from "../utils/sse";
 import { consola } from "consola";
 import { selectUpstream } from "@/utils/upstream";
-import { insertLog } from "@/db";
+import type { ChatCompletionMessage } from "openai/src/resources/index.js";
 
 const logger = consola.withTag("completionsApi");
 
@@ -146,10 +146,15 @@ export const completionsApi = new Elysia({
           completion.status = "completed";
           completion.ttft = Date.now() - begin;
           completion.duration = Date.now() - begin;
-          completion.completion = respJson.choices.map((c) => ({
-            role: c.message.role as string,
-            content: c.message.content ?? undefined,
-          }));
+          completion.completion = respJson.choices.map((c) => {
+            const msg = c.message as ChatCompletionMessage & { reasoning_content?: string };
+            return {
+              role: c.message.role as string,
+              content:
+                (msg.reasoning_content ? `<think>${msg.reasoning_content}</think>\n` : "") +
+                (msg.content ?? undefined),
+            };
+          });
           addCompletions(completion, bearer);
 
           return respText;
@@ -246,7 +251,8 @@ export const completionsApi = new Elysia({
 
           let ttft = -1;
           let isFirstChunk = true;
-          const partials = [];
+          const partials: string[] = [];
+          const extendedTags: { think?: string[] } = {};
           for await (const chunk of chunks) {
             if (isFirstChunk) {
               // log the time to first chunk as ttft
@@ -257,7 +263,14 @@ export const completionsApi = new Elysia({
               // Workaround: In most cases, upstream will return a message that is a valid json, and has length of choices = 0,
               //   which will be handled in below. However, in some cases, the last message is '[DONE]', and no usage is returned.
               //   In this case, we will end this completion.
-              completion.completion = [{ role: undefined, content: partials.join("") }];
+              completion.completion = [
+                {
+                  role: undefined,
+                  content:
+                    (extendedTags.think ? `<think>${extendedTags.think.join("")}</think>\n` : "") +
+                    partials.join(""),
+                },
+              ];
               completion.status = "completed";
               completion.ttft = ttft;
               completion.duration = Date.now() - begin;
@@ -294,7 +307,10 @@ export const completionsApi = new Elysia({
                 };
                 if (delta_.reasoning_content) {
                   // workaround: api.deepseek.com returns reasoning_content in delta
-                  partials.push(delta_.reasoning_content);
+                  if (extendedTags.think === undefined) {
+                    extendedTags.think = [];
+                  }
+                  extendedTags.think.push(delta_.reasoning_content);
                 }
               }
               yield `data: ${chunk}\n\n`;
@@ -309,7 +325,14 @@ export const completionsApi = new Elysia({
               console.log(data.usage);
               completion.promptTokens = data.usage?.prompt_tokens ?? -1;
               completion.completionTokens = data.usage?.completion_tokens ?? -1;
-              completion.completion = [{ role: undefined, content: partials.join("") }];
+              completion.completion = [
+                {
+                  role: undefined,
+                  content:
+                    (extendedTags.think ? `<think>${extendedTags.think.join("")}</think>\n` : "") +
+                    partials.join(""),
+                },
+              ];
               completion.status = "completed";
               completion.ttft = ttft;
               completion.duration = Date.now() - begin;
