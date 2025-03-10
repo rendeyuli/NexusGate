@@ -21,6 +21,7 @@ export const ApiKeysTable = pgTable("api_keys", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   expiresAt: timestamp("expires_at"),
+  lastSeen: timestamp("last_seen"),
   revoked: boolean("revoked").notNull().default(false),
 });
 

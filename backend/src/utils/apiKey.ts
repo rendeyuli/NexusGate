@@ -1,4 +1,4 @@
-import { findApiKey } from "@/db";
+import { updateApiKey } from "@/db";
 import * as crypto from "node:crypto";
 
 /**
@@ -7,7 +7,10 @@ import * as crypto from "node:crypto";
  * @returns true if the key is valid
  */
 export async function checkApiKey(key: string): Promise<boolean> {
-  const r = await findApiKey(key);
+  const r = await updateApiKey({
+    key,
+    lastSeen: new Date(),
+  });
   return r !== null && !r.revoked && (r.expiresAt === null || r.expiresAt > new Date());
 }
 

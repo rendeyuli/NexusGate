@@ -51,6 +51,16 @@ export async function findApiKey(key: string): Promise<ApiKey | null> {
   return r.length === 1 ? r[0] : null;
 }
 
+export async function updateApiKey(c: ApiKeyInsert) {
+  logger.debug("updateApiKey", c);
+  const r = await db
+    .update(schema.ApiKeysTable)
+    .set(c)
+    .where(eq(schema.ApiKeysTable.key, c.key))
+    .returning();
+  return r.length === 1 ? r[0] : null;
+}
+
 /**
  * list ALL api keys in database
  * @returns db records of api keys

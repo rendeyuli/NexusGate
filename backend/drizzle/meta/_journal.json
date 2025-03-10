@@ -15,6 +15,13 @@
       "when": 1741545709518,
       "tag": "0001_pink_iron_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1741627968935,
+      "tag": "0002_kind_flatman",
+      "breakpoints": true
     }
   ]
 }
