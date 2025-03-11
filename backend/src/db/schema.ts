@@ -27,22 +27,28 @@ export const ApiKeysTable = pgTable("api_keys", {
 
 export const UpstreamTable = pgTable("upstreams", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar("name", { // upstream name
+  // upstream name
+  name: varchar("name", {
     length: 63,
   }).notNull(),
-  url: varchar("url", { // upstream url
+  // upstream url
+  url: varchar("url", {
     length: 255,
   }).notNull(),
-  model: varchar("model", { // model name, used for incoming requests
+  // model name, used for incoming requests
+  model: varchar("model", {
     length: 63,
   }).notNull(),
-  upstreamModel: varchar("upstream_model", { // model name in upstream
+  // model name in upstream
+  upstreamModel: varchar("upstream_model", {
     length: 63,
   }),
-  apiKey: varchar("api_key", { // api key for upstream
+  // api key for upstream
+  apiKey: varchar("api_key", {
     length: 255,
   }),
-  weight: real("weight").notNull().default(1), // weight for load balancing
+  // weight for load balancing
+  weight: real("weight").notNull().default(1),
   comment: varchar("comment"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),

@@ -1,6 +1,6 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 
-import { apiKeyPlugin } from "../plugins/apiKeyPlugin";
+import { apiKeyPlugin } from "@/plugins/apiKeyPlugin";
 import { consola } from "consola";
 import { findApiKey, sumCompletionTokenUsage } from "@/db";
 
