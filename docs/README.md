@@ -5,6 +5,7 @@ This application is a Next.js project that provides documentation for NexusGate,
 Run development server:
 
 ```bash
+bun install
 bun run dev
 ```
 

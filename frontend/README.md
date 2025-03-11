@@ -19,19 +19,9 @@ To build this application for production:
 bun run build
 ```
 
-## Testing
-
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
-
-```bash
-bun run test
-```
-
 ## Styling
 
 This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-
 
 ## Shadcn
 
@@ -41,13 +31,11 @@ Add components using the canary version of [Shadcn](https://ui.shadcn.com/).
 bunx --bun shadcn@canary add button
 ```
 
-
 ## Environment Variables
 
 Create a `.env.local` file in the root of the project and add your environment variables there. You can use the `.env.example` file as a template.
 
 More information on environment variables can be found in the [Vite documentation](https://vite.dev/guide/env-and-mode.html).
-
 
 ## Routing
 This project uses [TanStack Router](https://tanstack.com/router). The initial setup is a file based router. Which means that the routes are managed as fiels in `src/routes`.
