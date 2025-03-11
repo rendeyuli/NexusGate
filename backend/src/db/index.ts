@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/bun-sql";
 import * as schema from "./schema";
-import { and, asc, count, desc, eq, not, sum } from "drizzle-orm";
+import { and, asc, count, desc, eq, not, sql, sum } from "drizzle-orm";
 import consola from "consola";
 import { DATABASE_URL } from "@/utils/config";
 import { migrate } from "drizzle-orm/bun-sql/migrator";
@@ -124,6 +124,36 @@ export async function listUpstreams() {
 }
 
 /**
+ * list ALL upstream names in database
+ * @returns list of upstream names
+ */
+export async function listUpstreamNames() {
+  logger.debug("listUpstreamNames");
+  const r = await db
+    .select({
+      name: schema.UpstreamTable.name,
+    })
+    .from(schema.UpstreamTable)
+    .where(not(schema.UpstreamTable.deleted));
+  return r.map((x) => x.name);
+}
+
+/**
+ * list ALL upstream models in database
+ * @returns list of upstream models
+ */
+export async function listUpstreamModels() {
+  logger.debug("listUpstreamModels");
+  const r = await db
+    .select({
+      model: schema.UpstreamTable.model,
+    })
+    .from(schema.UpstreamTable)
+    .where(not(schema.UpstreamTable.deleted));
+  return r.map((x) => x.model);
+}
+
+/**
  * insert upstream into database
  * @param c parameters of upstream to insert
  * @returns record of the new upstream, null if already exists
@@ -147,6 +177,44 @@ export async function deleteUpstream(id: number) {
     .where(eq(schema.UpstreamTable.id, id))
     .returning();
   return r.length === 1 ? r[0] : null;
+}
+
+export type UpstreamAggregatedByModel = { model: string; upstreams: Upstream[] }[];
+
+/**
+ * group upstreams by model
+ * @returns list of upstreams, grouped by model
+ */
+export async function groupUpstreamByModel() {
+  logger.debug("groupUpstreamByModel");
+  const r = await db
+    .select({
+      model: schema.UpstreamTable.model,
+      upstreams: sql`json_agg(${schema.UpstreamTable})`,
+    })
+    .from(schema.UpstreamTable)
+    .where(not(schema.UpstreamTable.deleted))
+    .groupBy(schema.UpstreamTable.model);
+  return r as UpstreamAggregatedByModel;
+}
+
+export type UpstreamAggregatedByName = { name: string; upstreams: Upstream[] }[];
+
+/**
+ * group upstreams by name
+ * @returns list of upstreams, grouped by name
+ */
+export async function groupUpstreamByName() {
+  logger.debug("groupUpstreamByName");
+  const r = await db
+    .select({
+      name: schema.UpstreamTable.name,
+      upstreams: sql`json_agg(${schema.UpstreamTable})`,
+    })
+    .from(schema.UpstreamTable)
+    .where(not(schema.UpstreamTable.deleted))
+    .groupBy(schema.UpstreamTable.name);
+  return r as UpstreamAggregatedByName;
 }
 
 /**
