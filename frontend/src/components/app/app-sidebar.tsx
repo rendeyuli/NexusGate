@@ -4,6 +4,7 @@ import { ArrowUpDownIcon, LayoutGridIcon, PackageIcon, WaypointsIcon } from 'luc
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -12,6 +13,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+
+import { AppSidebarFooter } from './app-sidebar-footer'
 
 const navItems = [
   // {
@@ -85,6 +88,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter className="overflow-hidden">
+        <AppSidebarFooter />
+      </SidebarFooter>
     </Sidebar>
   )
 }
