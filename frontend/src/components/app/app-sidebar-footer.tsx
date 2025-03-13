@@ -6,19 +6,30 @@ import { formatError } from '@/lib/error'
 import { GithubIcon } from '@/components/app/github-icon'
 import { Button } from '@/components/ui/button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
+import { useSidebar } from '@/components/ui/sidebar'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 export function AppSidebarFooter() {
+  const { isMobile, state } = useSidebar()
+
   return (
-    <div className="flex w-[calc(var(--sidebar-width)-1rem)] items-center justify-between gap-2">
-      <div className="flex items-center">
-        <Button variant="ghost" className="text-muted-foreground size-8 p-0" asChild>
-          <a href="https://github.com/GeekTechX/NexusGate" target="_blank" rel="noreferrer">
-            <GithubIcon />
-          </a>
-        </Button>
-        <CommitSha />
+    <TooltipProvider>
+      <div className="flex w-[calc(var(--sidebar-width)-1rem)] items-center justify-between gap-2">
+        <div className="flex items-center">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" className="text-muted-foreground size-8 p-0" asChild>
+                <a href="https://github.com/GeekTechX/NexusGate" target="_blank" rel="noreferrer">
+                  <GithubIcon />
+                </a>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side={state === 'collapsed' || isMobile ? 'right' : 'top'}>GitHub</TooltipContent>
+          </Tooltip>
+          <CommitSha />
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   )
 }
 
