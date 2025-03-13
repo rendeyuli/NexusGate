@@ -23,7 +23,7 @@
     "openai": "^4.86.2"
   },
   "scripts": {
-    "dev": "CONSOLA_LEVEL=9999 bun --watch --hot --no-clear-screen --inspect src/index.ts",
+    "dev": "COMMIT_SHA=$(git rev-parse HEAD) CONSOLA_LEVEL=9999 bun --watch --hot --no-clear-screen --inspect src/index.ts",
     "build": "NODE_ENV=production bun build src/index.ts --target bun --outdir out/",
     "format": "biome format --write",
     "check": "biome check --write"
