@@ -5,7 +5,7 @@ ARG COMMIT_SHA="<unknown>"
 COPY . .
 RUN --mount=type=cache,target=/cache \
     BUN_INSTALL_CACHE_DIR=/cache bun install --frozen-lockfile
-ENV NODE_ENV=production VITE_BASE_URL=/ COMMIT_SHA=${COMMIT_SHA}
+ENV NODE_ENV=production VITE_BASE_URL=/ VITE_COMMIT_SHA=${COMMIT_SHA}
 RUN cd frontend && bun run build 
 
 FROM nginx:alpine AS runner
