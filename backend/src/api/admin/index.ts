@@ -4,6 +4,7 @@ import { adminApiKey } from "./apiKey";
 import { adminUpstream } from "./upstream";
 import { adminCompletions } from "./completions";
 import { adminUsage } from "./usage";
+import { COMMIT_SHA } from "@/utils/config";
 
 export const routes = new Elysia({
   detail: {
@@ -20,6 +21,9 @@ export const routes = new Elysia({
         .use(adminUsage)
         .get("/", () => true, {
           detail: { description: "Check whether the admin secret is valid." },
-        }),
+        })
+        .get("/rev", () => ({
+          version: COMMIT_SHA,
+        })),
     ),
   );

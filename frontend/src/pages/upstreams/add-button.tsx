@@ -26,7 +26,7 @@ import { Spinner } from '@/components/ui/spinner'
 const addUpstreamSchema = z.object({
   name: z.string(),
   model: z.string(),
-  upstreamModel: z.string(),
+  upstreamModel: z.string().optional(),
   url: z.string(),
   apiKey: z.string().optional(),
 })

@@ -1,12 +1,13 @@
 FROM oven/bun:1 AS base
 WORKDIR /app
-
+ARG COMMIT_SHA="<unknown>"
+ENV NODE_ENV=production COMMIT_SHA=${COMMIT_SHA}
 
 FROM base AS builder
 COPY . .
 RUN --mount=type=cache,target=/cache \
     BUN_INSTALL_CACHE_DIR=/cache bun install --frozen-lockfile
-RUN NODE_ENV=production bun build backend/src/index.ts --target bun --outdir backend/out/
+RUN bun build backend/src/index.ts --target bun --outdir backend/out/
 
 FROM base AS runner 
 COPY --from=builder /app/backend/out/index.js /app/index.js

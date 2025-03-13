@@ -9,3 +9,6 @@ node_modules
 .DS_Store
 
 .vscode
+
+# Some other stuff that should not be pushed to remote
+.local
