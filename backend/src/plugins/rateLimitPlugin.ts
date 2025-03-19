@@ -1,11 +1,9 @@
 import TokenBucket from "@/utils/tokenBucket";
 import { Elysia } from "elysia";
 import { consola } from "consola";
+import { DEFAULT_RATE_LIMIT, DEFAULT_REFILL_RATE } from "@/utils/config";
 
 const logger = consola.withTag("rateLimitPlugin");
-
-const DEFAULT_RATE_LIMIT = 10;
-const DEFAULT_REFILL_RATE = 1;
 
 const tokenBuckets = new Map<string, TokenBucket>();
 
@@ -20,8 +18,11 @@ export const rateLimitPlugin = new Elysia({
         }) => ({
             async beforeHandle({ error, set }) {
                 const id = options?.identifier ?? "default";
-                const limit = options?.limit ?? DEFAULT_RATE_LIMIT;
-                const refill = options?.refill ?? DEFAULT_REFILL_RATE;
+                const limit = options?.limit ?? Number.parseInt(DEFAULT_RATE_LIMIT);
+                const refill = options?.refill ?? Number.parseInt(DEFAULT_REFILL_RATE);
+                if (Number.isNaN(limit) || Number.isNaN(refill)) {
+                    return error(500, "Invalid rate limit configuration");
+                }
                 if (!tokenBuckets.has(id)) {
                     tokenBuckets.set(id, new TokenBucket(limit, refill, id));
                 }
