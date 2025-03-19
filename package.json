@@ -12,5 +12,8 @@
     "esbuild",
     "protobufjs",
     "sharp"
-  ]
+  ],
+  "dependencies": {
+    "ioredis": "^5.6.0"
+  }
 }
