@@ -71,7 +71,11 @@ class RedisClient {
    * @param {object} options - Optional settings (expiry, etc)
    * @returns {Promise<string | null>} Operation result
    */
-  public async set(key: string, value: string | number, options?: { EX?: number }): Promise<string | null> {
+  public async set(
+    key: string,
+    value: string | number,
+    options?: { EX?: number },
+  ): Promise<string | null> {
     try {
       if (options?.EX) {
         return await this.client.set(key, value.toString(), "EX", options.EX);

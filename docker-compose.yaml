@@ -13,15 +13,22 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: "redis:latest"
+    restart: on-failure
+
   backend:
     image: "ghcr.io/em-geeklab/nexus-gate-server:latest"
     environment:
       - "DATABASE_URL=postgres://nexusgate:change_me_in_production@database:5432/nexusgate"
       - "ADMIN_SUPER_SECRET=admin_key_change_in_production"
+      - "REDIS_URL=redis://redis:6379"
     restart: on-failure
     depends_on:
       database:
         condition: service_healthy
+      redis:
+        condition: service_started
 
   frontend:
     image: "ghcr.io/em-geeklab/nexus-gate-web:latest"

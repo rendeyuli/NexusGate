@@ -379,6 +379,6 @@ export const completionsApi = new Elysia({
         limit: 10,
         refill: 1,
         identifier: "completions",
-      }
+      },
     },
   );
