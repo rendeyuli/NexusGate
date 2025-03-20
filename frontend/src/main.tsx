@@ -10,6 +10,8 @@ import 'katex/dist/katex.min.css'
 
 import { QueryProvider } from '@/components/app/query-provider'
 
+import '@/i18n'
+
 import reportWebVitals from './reportWebVitals'
 
 // Create a new router instance
