@@ -7,6 +7,7 @@ import { parseSse } from "@/utils/sse";
 import { consola } from "consola";
 import { selectUpstream } from "@/utils/upstream";
 import type { ChatCompletionMessage } from "openai/src/resources/index.js";
+import { rateLimitPlugin } from "@/plugins/rateLimitPlugin";
 
 const logger = consola.withTag("completionsApi");
 
@@ -37,6 +38,7 @@ export const completionsApi = new Elysia({
   },
 })
   .use(apiKeyPlugin)
+  .use(rateLimitPlugin)
   .post(
     "/completions",
     async function* ({ body, error, bearer }) {
@@ -373,5 +375,10 @@ export const completionsApi = new Elysia({
     {
       body: tChatCompletionCreate,
       checkApiKey: true,
+      rateLimit: {
+        limit: 10,
+        refill: 1,
+        identifier: "completions",
+      },
     },
   );

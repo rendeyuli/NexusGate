@@ -17,6 +17,7 @@ Edit `.env` file:
 ```shell
 ADMIN_SUPER_SECRET=CHANGE_ME_IN_PRODUCTION
 DATABASE_URL=postgres://nexusgate:your-password@databae:5432/nexusgate
+REDIS_URL=redis://localhost:6379
 ```
 
 Build from source:
@@ -51,11 +52,18 @@ A PostgreSQL database is required. We recommend to setup it with:
 podman run -p 127.0.0.1:5432:5432 --name nexusgate-testdb -e POSTGRES_PASSWORD=password --POSTGRES_DB=testdb postgres:latest
 ```
 
+A Redis instance is also required. We recommend to setup it with:
+
+```shell
+podman run -p 127.0.0.1:6379:6379 --name nexusgate-redis redis:latest
+```
+
 Edit `.env` file:
 
 ```shell
 ADMIN_SUPER_SECRET=supa_admin_secret
 DATABASE_URL=postgres://postgres:password@localhost:5432/testdb
+REDIS_URL=redis://localhost:6379
 ```
 
 To start a instance of backend:

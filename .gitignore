@@ -12,3 +12,5 @@ node_modules
 
 # Some other stuff that should not be pushed to remote
 .local
+
+.env

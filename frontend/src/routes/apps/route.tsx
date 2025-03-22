@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 import {
   AppHeader,
@@ -13,13 +14,15 @@ export const Route = createFileRoute('/apps')({
 })
 
 function RouteComponent() {
+  const { t } = useTranslation()
+
   return (
     <>
       <AppHeader>
         <AppHeaderPart>
           <AppSidebarTrigger />
           <AppSidebarSeparator />
-          <AppHeaderTitle>Applications</AppHeaderTitle>
+          <AppHeaderTitle>{t('applications')}</AppHeaderTitle>
         </AppHeaderPart>
       </AppHeader>
       <Outlet />
