@@ -49,7 +49,7 @@ NexusGate is built on Elysia.js, which depends on Bun. Ensure you have the lates
 A PostgreSQL database is required. We recommend to setup it with:
 
 ```shell
-podman run -p 127.0.0.1:5432:5432 --name nexusgate-testdb -e POSTGRES_PASSWORD=password --POSTGRES_DB=testdb postgres:latest
+podman run -p 127.0.0.1:5432:5432 --name nexusgate-testdb -e POSTGRES_PASSWORD=password -e POSTGRES_DB=testdb postgres:latest
 ```
 
 A Redis instance is also required. We recommend to setup it with:
